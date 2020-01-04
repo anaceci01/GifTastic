@@ -2,7 +2,7 @@ const apiKey = "1HLsDjjus98EZ7ONLXVBoFRbyIfZEHAW";
 const queryUrl = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey +
     "&limit=10&offset=0&rating=pg-13&lang=en";
 
-const topics = ["Dogs", "Cats", "Chickens", "Guinea Pigs", "Sharks", "Elephants", "Whales", "Eagles", "Pigs", "Cows"];
+const topics = ["Dogs", "Cats", "Chickens", "Guinea Pigs", "Sharks", "Elephants", "Cows"];
 
 $(document).ready(function() {
     buildButtons($("#btn-div"));
@@ -34,7 +34,7 @@ function addCategory() {
         $("#add-text").val("");
     }
 }
-
+//Button created after typed on search
 function buildButtons(theDiv) {
     theDiv.empty();
     for (let i = 0; i < topics.length; i++) {
@@ -59,7 +59,7 @@ function showGifs() {
         createGifs(response, $("#gif-div"));
     });
 }
-// Create a new Div
+// Create a new Div properties
 function createGifs(gifObject, theDiv) {
     theDiv.empty();
     for (let i = 0; i < gifObject.data.lenght; i++) {
@@ -77,5 +77,14 @@ function createGifs(gifObject, theDiv) {
         newImage.attr("data-state", "still");
         newImage.addClass("card-img-top-gif");
 
+        subDiv.addClass("card-body border border-dark bg-dark text-center");
+
+        p.addClass("card-text");
+        p.text(`Rating: ${gifObject.data[i].rating.toUppperCase()}`);
+
+        subDiv.append(p);
+        newDiv.append(newImage);
+        newDiv.append(subDiv);
+        theDiv.append(newDiv);
     }
 }
