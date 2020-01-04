@@ -10,6 +10,38 @@ $(document).ready(function() {
         if (e.which == 13) {
             console.log("You pressed enter!");
             addCategory();
+        } else {
+
         }
-    })
-})
+    });
+});
+
+function addCategory() {
+    let newCategory = $("#add-text").val();
+    console.log(newCategory);
+    if (topics.includes(newCategory)) {
+        $("#add-text").addClass("is-invalid");
+        $("#add-text").attr("data-originial-title", `${newCategory} already exists. Tray something else.`).tooltip('show');
+    } else if (newCategory.lenght === 0) {
+        $("#add-text").addClass("is-invalid");
+        $("#add-text").attr("data-original-title", `Please enter a non-blank value.`).tooltip('show');
+    } else {
+        $("#add-text").tooltip('hide');
+        $("#add-text").removeClass("is-Invalid");
+        topics.push(newCategory);
+        buildButtons($("#btn-div"));
+        console.log(`New category to add is: ${newCategory}`);
+        $("#add-text").val("");
+    }
+}
+
+function buildButtons(theDiv) {
+    theDiv.empty();
+    for (let i = 0; i < topics.length; i++) {
+        let newButton = $("<button>");
+        newButton.attr("type", "button");
+        newButton.addClass("btn btn-dark m-2 gif-btn");
+        newButton.text(topics[i]);
+        theDiv.append(newButton);
+    }
+}
