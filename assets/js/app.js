@@ -17,7 +17,7 @@ $(document).ready(function() {
 });
 
 function addCategory() {
-    let newCategory = $("#add-text").val();
+    var newCategory = $("#add-text").val();
     console.log(newCategory);
     if (topics.includes(newCategory)) {
         $("#add-text").addClass("is-invalid");
@@ -37,8 +37,8 @@ function addCategory() {
 //Button created after typed on search
 function buildButtons(theDiv) {
     theDiv.empty();
-    for (let i = 0; i < topics.length; i++) {
-        let newButton = $("<button>");
+    for (var i = 0; i < topics.length; i++) {
+        var newButton = $("<button>");
         newButton.attr("type", "button");
         newButton.addClass("btn btn-dark m-2 gif-btn");
         newButton.text(topics[i]);
@@ -47,9 +47,9 @@ function buildButtons(theDiv) {
 }
 // Generate a giff with a search button
 function showGifs() {
-    let btnSearch = $(this).text().trim();
+    var btnSearch = $(this).text().trim();
     console.log("You selected: " + btnSearch);
-    let ajaxRequest = queryUrl + "&q=" + btnSearch;
+    var ajaxRequest = queryUrl + "&q=" + btnSearch;
     console.log("Query URL: " + ajaxRequest);
 
     $.ajax({
@@ -62,7 +62,7 @@ function showGifs() {
 // Create a new Div properties
 function createGifs(gifObject, theDiv) {
     theDiv.empty();
-    for (let i = 0; i < gifObject.data.lenght; i++) {
+    for (var i = 0; i < gifObject.data.lenght; i++) {
         var newDiv = $("<div>");
         var newImage = $("<img");
         var subDiv = $("<div>");
@@ -88,3 +88,15 @@ function createGifs(gifObject, theDiv) {
         theDiv.append(newDiv);
     }
 }
+
+function gifToggle() {
+    var currentState = $(this).attr("data-state");
+    if (currentState == "still") {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    } else {
+        console.log("Unknown state: " + currentState);
+    }
+}
+$(document).on("click", "gif-btn", showGifs);
+$(document).on("click", ".gif", gifToggle);
