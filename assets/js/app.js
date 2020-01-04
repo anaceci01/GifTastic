@@ -1,5 +1,5 @@
 const apiKey = "1HLsDjjus98EZ7ONLXVBoFRbyIfZEHAW";
-const queUrl = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey +
+const queryUrl = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey +
     "&limit=10&offset=0&rating=pg-13&lang=en";
 
 const topics = ["Dogs", "Cats", "Chickens", "Guinea Pigs", "Sharks", "Elephants", "Whales", "Eagles", "Pigs", "Cows"];
@@ -44,4 +44,18 @@ function buildButtons(theDiv) {
         newButton.text(topics[i]);
         theDiv.append(newButton);
     }
+}
+
+function showGifs() {
+    let btnSearch = $(this).text().trim();
+    console.log("You selected: " + btnSearch);
+    let ajaxRequest = queryUrl + "&q=" + btnSearch;
+    console.log("Query URL: " + ajaxRequest);
+
+    $.ajax({
+        url: ajaxRequest,
+        method: "GET"
+    }).then(function(response) {
+        createGifs(response, $("#gif-div"));
+    });
 }
