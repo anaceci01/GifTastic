@@ -2,20 +2,20 @@ const apiKey = "1HLsDjjus98EZ7ONLXVBoFRbyIfZEHAW";
 const queryUrl = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey +
     "&limit=10&offset=0&rating=pg-13&lang=en";
 
+
 const topics = ["Dogs", "Cats", "Chickens", "Guinea Pigs", "Sharks", "Elephants", "Cows"];
 
 $(document).ready(function() {
     buildButtons($("#btn-div"));
+    $("#add-btn").click(function() { addCategory(); });
     $("#add-text").keypress(function(e) {
         if (e.which == 13) {
             console.log("You pressed enter!");
             addCategory();
-        } else {
-
-        }
+        } else {}
     });
 });
-
+//Add a new category when typed a request
 function addCategory() {
     var newCategory = $("#add-text").val();
     console.log(newCategory);
@@ -45,15 +45,15 @@ function buildButtons(theDiv) {
         theDiv.append(newButton);
     }
 }
-// Generate a giff with a search button
-function showGifs() {
-    var btnSearch = $(this).text().trim();
-    console.log("You selected: " + btnSearch);
-    var ajaxRequest = queryUrl + "&q=" + btnSearch;
-    console.log("Query URL: " + ajaxRequest);
+// Generate a gif with a search button
+function displayGifs() {
+    var btnText = $(this).text().trim();
+    console.log("You selected: " + btnTxt);
+    var ajaxUrl = queryUrl + "&q=" + btnText;
+    console.log("Query URL: " + ajaxUrl);
 
     $.ajax({
-        url: ajaxRequest,
+        url: ajaxUrl,
         method: "GET"
     }).then(function(response) {
         createGifs(response, $("#gif-div"));
@@ -98,5 +98,8 @@ function gifToggle() {
         console.log("Unknown state: " + currentState);
     }
 }
-$(document).on("click", "gif-btn", showGifs);
+$(document).on("click", "gif-btn", displayGifs);
 $(document).on("click", ".gif", gifToggle);
+
+
+// NEED TO FIX THE GIF DISPLAY, NOT SHOWING WHEN CLIKCING IT
