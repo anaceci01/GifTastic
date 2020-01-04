@@ -45,7 +45,7 @@ function buildButtons(theDiv) {
         theDiv.append(newButton);
     }
 }
-
+// Generate a giff with a search button
 function showGifs() {
     let btnSearch = $(this).text().trim();
     console.log("You selected: " + btnSearch);
@@ -58,4 +58,24 @@ function showGifs() {
     }).then(function(response) {
         createGifs(response, $("#gif-div"));
     });
+}
+// Create a new Div
+function createGifs(gifObject, theDiv) {
+    theDiv.empty();
+    for (let i = 0; i < gifObject.data.lenght; i++) {
+        var newDiv = $("<div>");
+        var newImage = $("<img");
+        var subDiv = $("<div>");
+        var p = $("<p>");
+
+        newDiv.addClass("card p-0 m-2 col-lg-3 border-0");
+
+        newImage.attr("src", gifObject.data[i].images.fixed_width_still.url);
+        newImage.attr("alt", gifObject.data[i].title);
+        newImage.attr("data-still", gifObject.data[i].images.fixed_width_still.url);
+        newImage.attr("data-animate", gifObject.data[i].images.fixed_width_still.url);
+        newImage.attr("data-state", "still");
+        newImage.addClass("card-img-top-gif");
+
+    }
 }
