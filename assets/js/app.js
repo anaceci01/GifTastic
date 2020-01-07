@@ -21,7 +21,7 @@ function addCategory() {
     console.log(newCategory);
     if (topics.includes(newCategory)) {
         $("#add-text").addClass("is-invalid");
-        $("#add-text").attr("data-originial-title", `${newCategory} already exists. Tray something else.`).tooltip('show');
+        $("#add-text").attr("data-original-title", `${newCategory} already exists. Try something else.`).tooltip('show');
     } else if (newCategory.lenght === 0) {
         $("#add-text").addClass("is-invalid");
         $("#add-text").attr("data-original-title", `Please enter a non-blank value.`).tooltip('show');
@@ -46,9 +46,9 @@ function buildButtons(theDiv) {
     }
 }
 // Generate a gif with a search button
-function displayGifs() {
+function grabGifs() {
     var btnText = $(this).text().trim();
-    console.log("You selected: " + btnTxt);
+    console.log("You clicked: " + btnText);
     var ajaxUrl = queryUrl + "&q=" + btnText;
     console.log("Query URL: " + ajaxUrl);
 
@@ -56,11 +56,11 @@ function displayGifs() {
         url: ajaxUrl,
         method: "GET"
     }).then(function(response) {
-        createGifs(response, $("#gif-div"));
+        renderGifs(response, $("#gif-div"));
     });
 }
 // Create a new Div properties
-function createGifs(gifObject, theDiv) {
+function renderGifs(gifObject, theDiv) {
     theDiv.empty();
     for (var i = 0; i < gifObject.data.lenght; i++) {
         var newDiv = $("<div>");
@@ -92,13 +92,16 @@ function createGifs(gifObject, theDiv) {
 function gifToggle() {
     var currentState = $(this).attr("data-state");
     if (currentState == "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+    } else if (currentState == "animate") {
         $(this).attr("src", $(this).attr("data-still"));
         $(this).attr("data-state", "still");
     } else {
         console.log("Unknown state: " + currentState);
     }
 }
-$(document).on("click", "gif-btn", displayGifs);
+$(document).on("click", ".gif-btn", grabGifs);
 $(document).on("click", ".gif", gifToggle);
 
 
